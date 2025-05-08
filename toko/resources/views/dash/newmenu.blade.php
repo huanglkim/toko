@@ -21,7 +21,7 @@
                             ->first();
                     @endphp
                     <button
-                        class="btn btn-sm mt-2 mr-2 text-bold text-uppercase {{ $menufav ? 'bg-success' : 'bg-gray' }}"
+                        class="btn btn-sm mt-2 mr-2 text-uppercase {{ $menufav ? 'bg-success' : 'bg-gray' }}"
                         onclick="favunfav(this)" data-menu_id="{{ $lmu->menu_id }}"
                         data-menufav_id="{{ $menufav ? $menufav->id : 0 }}">
                         {{ $lmu->menu->nama }}
@@ -84,7 +84,7 @@
                                                 <i class="nav-icon fas fa-link"></i> {{-- Icon pengganti jika tidak ada --}}
                                             @endif
                                         </div>
-                                        <div class="custom-label text-uppercase text-bold">
+                                        <div class="custom-label text-uppercase">
                                             {{ $um->nama }}
                                         </div>
                                     </div>

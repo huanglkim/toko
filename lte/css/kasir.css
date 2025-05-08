@@ -1,0 +1,35 @@
+.cart-scroll {
+    position: relative;
+    height: 340px;
+    overflow: auto;
+}
+
+.table-scroll-y {
+    display: block;
+}
+
+.header-pane {
+    position: relative;
+    height: 92%;
+}
+
+.footer-cart {
+    position: relative;
+    height: 120px;
+}
+
+.listitem {
+    position: absolute;
+    height: 400px;
+    overflow: auto;
+}
+
+.total-pane {
+    position: absolute;
+    height: 200px;
+}
+
+.fake-receipt-font {
+    font-family: "Fake Receipt", arial;
+    font-size: 12px;
+}

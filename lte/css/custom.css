@@ -1,0 +1,21 @@
+.cart-scroll {
+    position: relative;
+    height: 380px;
+    overflow: auto;
+}
+.table-scroll-y {
+    display: block;
+}
+.header-pane {
+    position: relative;
+    height: 145px;
+}
+.footer-cart {
+    position: relative;
+    height: 120px;
+}
+.listitem {
+    position: absolute;
+    height: 400px;
+    overflow: auto;
+}

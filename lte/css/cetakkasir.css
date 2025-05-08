@@ -1,0 +1,39 @@
+table,
+th,
+
+
+table {
+    width: 100%;
+}
+
+
+
+body {
+    width: 75mm;
+    /* change the margins as you want them to be. */
+
+}
+.fake-receipt-font{
+    font-family: 'Fake Receipt', sans-serif;               
+}
+#cssTable td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+h1.dblUnderlined {
+    border-bottom: 3px double;
+}
+
+table thead tr th {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+}
+div.top25 {
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+div.devider {
+    border: 1px solid #000000;
+    padding-top: 1px;
+}

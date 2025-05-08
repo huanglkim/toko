@@ -11,7 +11,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 20px;
-            background-color: #000000;
+            background-color: #ffffff;
         }
 
         .header-logo {
@@ -38,7 +38,6 @@
             margin-top: 20px;
             page-break-inside: auto;
             background-color: #ffffff;
-            /* Background putih */
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -50,19 +49,15 @@
             padding: 12px;
             text-align: center;
             color: black;
-            /* Teks hitam */
         }
 
         th {
             background-color: #ffffff;
-            /* Background putih pada header */
             color: black;
-            /* Teks hitam di header */
         }
 
         tr:nth-child(even) {
             background-color: #f9f9f9;
-            /* Background terang pada baris genap */
         }
 
         tr:hover {
@@ -74,7 +69,6 @@
             background-color: #d1f2eb;
             color: #0c3027;
         }
-
 
         .no-data {
             text-align: center;
@@ -94,12 +88,6 @@
 
         .table-container .table {
             width: 48%;
-        }
-
-        .total-row {
-            font-weight: bold;
-            background-color: #d1f2eb;
-            color: #0c3027;
         }
 
         .header-info {
@@ -167,126 +155,121 @@
             </p>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="7">Pendapatan</th>
-                </tr>
-                <tr>
-                    <th>Kode Akun</th>
-                    <th>Nama Akun</th>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <th>{{ date('F', mktime(0, 0, 0, $i, 1, $tahun_awal)) }}</th>
-                    @endfor
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $totalPendapatanPerBulan = array_fill(
-                        (int) $bulan_awal,
-                        (int) $bulan_akhir - (int) $bulan_awal + 1,
-                        0,
-                    );
-                @endphp
-                @foreach ($pendapatanData as $kodeAcc => $dataBulan)
+        @if ((int) $bulan_awal > (int) $bulan_akhir)
+            <div class="no-data">Periode tidak valid: Bulan awal tidak boleh lebih besar dari bulan akhir.</div>
+        @else
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ $kodeAcc }}</td>
-                        <td>{{ $dataBulan[str_pad($bulan_awal, 2, '0', STR_PAD_LEFT)]['nama_acc'] }}</td>
+                        <th colspan="7">Pendapatan</th>
+                    </tr>
+                    <tr>
+                        <th>Kode Akun</th>
+                        <th>Nama Akun</th>
                         @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                            <td>{{ Rupiah($dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo']) }}
-                            </td>
-                            @php
-                                $totalPendapatanPerBulan[$i] += $dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo'];
-                            @endphp
+                            <th>{{ date('F', mktime(0, 0, 0, $i, 1, $tahun_awal)) }}</th>
                         @endfor
                     </tr>
-                @endforeach
-                <tr class="total-row">
-                    <td colspan="2">Total Pendapatan</td>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <td>{{ Rupiah($totalPendapatanPerBulan[$i]) }}</td>
-                    @endfor
-                </tr>
-                <tr>
-                    <th colspan="7">Hpp</th>
-                </tr>
-                <tr>
-                    <th>Kode Akun</th>
-                    <th>Nama Akun</th>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <th>{{ date('F', mktime(0, 0, 0, $i, 1, $tahun_awal)) }}</th>
-                    @endfor
-                </tr>
-                @php
-                    $totalHppPerBulan = array_fill((int) $bulan_awal, (int) $bulan_akhir - (int) $bulan_awal + 1, 0);
-                @endphp
-                @foreach ($hppData as $kodeAcc => $dataBulan)
-                    <tr>
-                        <td>{{ $kodeAcc }}</td>
-                        <td>{{ $dataBulan[str_pad($bulan_awal, 2, '0', STR_PAD_LEFT)]['nama_acc'] }}</td>
+                </thead>
+                <tbody>
+                    @php
+                        $totalPendapatanPerBulan = array_fill((int) $bulan_awal, (int) $bulan_akhir - (int) $bulan_awal + 1, 0);
+                    @endphp
+                    @foreach ($pendapatanData as $kodeAcc => $dataBulan)
+                        <tr>
+                            <td>{{ $kodeAcc }}</td>
+                            <td>{{ $dataBulan[str_pad($bulan_awal, 2, '0', STR_PAD_LEFT)]['nama_acc'] }}</td>
+                            @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                                <td>{{ Rupiah($dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo']) }}</td>
+                                @php
+                                    $totalPendapatanPerBulan[$i] += $dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo'];
+                                @endphp
+                            @endfor
+                        </tr>
+                    @endforeach
+                    <tr class="total-row">
+                        <td colspan="2">Total Pendapatan</td>
                         @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                            <td>{{ Rupiah($dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo']) }}
-                            </td>
-                            @php
-                                $totalHppPerBulan[$i] += $dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo'];
-                            @endphp
+                            <td>{{ Rupiah($totalPendapatanPerBulan[$i]) }}</td>
                         @endfor
                     </tr>
-                @endforeach
-                <tr class="total-row">
-                    <td colspan="2">Total HPP</td>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <td>{{ Rupiah($totalHppPerBulan[$i]) }}</td>
-                    @endfor
-                </tr>
-                <tr class="total-row">
-                    <td colspan="2">Laba Kotor</td>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <td>{{ Rupiah($totalPendapatanPerBulan[$i] - $totalHppPerBulan[$i]) }}
-                        </td>
-                    @endfor
-                </tr>
-                <tr>
-                    <th colspan="7">Biaya</th>
-                </tr>
-                <tr>
-                    <th>Kode Akun</th>
-                    <th>Nama Akun</th>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <th>{{ date('F', mktime(0, 0, 0, $i, 1, $tahun_awal)) }}</th>
-                    @endfor
-                </tr>
-                @php
-                    $totalBiayaPerBulan = array_fill((int) $bulan_awal, (int) $bulan_akhir - (int) $bulan_awal + 1, 0);
-                @endphp
-                @foreach ($biayaData as $kodeAcc => $dataBulan)
                     <tr>
-                        <td>{{ $kodeAcc }}</td>
-                        <td>{{ $dataBulan[str_pad($bulan_awal, 2, '0', STR_PAD_LEFT)]['nama_acc'] }}</td>
+                        <th colspan="7">Hpp</th>
+                    </tr>
+                    <tr>
+                        <th>Kode Akun</th>
+                        <th>Nama Akun</th>
                         @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                            <td>{{ Rupiah($dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo']) }}
-                            </td>
-                            @php
-                                $totalBiayaPerBulan[$i] += $dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo'];
-                            @endphp
+                            <th>{{ date('F', mktime(0, 0, 0, $i, 1, $tahun_awal)) }}</th>
                         @endfor
                     </tr>
-                @endforeach
-                <tr class="total-row">
-                    <td colspan="2">Total Biaya</td>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <td>{{ Rupiah($totalBiayaPerBulan[$i]) }}</td>
-                    @endfor
-                </tr>
-                <tr class="total-row">
-                    <td colspan="2">Laba Rugi/Bersih</td>
-                    @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
-                        <td>{{ Rupiah($totalPendapatanPerBulan[$i] - $totalHppPerBulan[$i] - $totalBiayaPerBulan[$i]) }}
-                        </td>
-                    @endfor
-                </tr>
-            </tbody>
-        </table>
+                    @php
+                        $totalHppPerBulan = array_fill((int) $bulan_awal, (int) $bulan_akhir - (int) $bulan_awal + 1, 0);
+                    @endphp
+                    @foreach ($hppData as $kodeAcc => $dataBulan)
+                        <tr>
+                            <td>{{ $kodeAcc }}</td>
+                            <td>{{ $dataBulan[str_pad($bulan_awal, 2, '0', STR_PAD_LEFT)]['nama_acc'] }}</td>
+                            @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                                <td>{{ Rupiah($dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo']) }}</td>
+                                @php
+                                    $totalHppPerBulan[$i] += $dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo'];
+                                @endphp
+                            @endfor
+                        </tr>
+                    @endforeach
+                    <tr class="total-row">
+                        <td colspan="2">Total HPP</td>
+                        @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                            <td>{{ Rupiah($totalHppPerBulan[$i]) }}</td>
+                        @endfor
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2">Laba Kotor</td>
+                        @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                            <td>{{ Rupiah($totalPendapatanPerBulan[$i] - $totalHppPerBulan[$i]) }}</td>
+                        @endfor
+                    </tr>
+                    <tr>
+                        <th colspan="7">Biaya</th>
+                    </tr>
+                    <tr>
+                        <th>Kode Akun</th>
+                        <th>Nama Akun</th>
+                        @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                            <th>{{ date('F', mktime(0, 0, 0, $i, 1, $tahun_awal)) }}</th>
+                        @endfor
+                    </tr>
+                    @php
+                        $totalBiayaPerBulan = array_fill((int) $bulan_awal, (int) $bulan_akhir - (int) $bulan_awal + 1, 0);
+                    @endphp
+                    @foreach ($biayaData as $kodeAcc => $dataBulan)
+                        <tr>
+                            <td>{{ $kodeAcc }}</td>
+                            <td>{{ $dataBulan[str_pad($bulan_awal, 2, '0', STR_PAD_LEFT)]['nama_acc'] }}</td>
+                            @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                                <td>{{ Rupiah($dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo']) }}</td>
+                                @php
+                                    $totalBiayaPerBulan[$i] += $dataBulan[str_pad($i, 2, '0', STR_PAD_LEFT)]['saldo'];
+                                @endphp
+                            @endfor
+                        </tr>
+                    @endforeach
+                    <tr class="total-row">
+                        <td colspan="2">Total Biaya</td>
+                        @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                            <td>{{ Rupiah($totalBiayaPerBulan[$i]) }}</td>
+                        @endfor
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2">Laba Rugi/Bersih</td>
+                        @for ($i = (int) $bulan_awal; $i <= (int) $bulan_akhir; $i++)
+                            <td>{{ Rupiah($totalPendapatanPerBulan[$i] - $totalHppPerBulan[$i] - $totalBiayaPerBulan[$i]) }}</td>
+                        @endfor
+                    </tr>
+                </tbody>
+            </table>
+        @endif
     </div>
     <script>
         window.print();

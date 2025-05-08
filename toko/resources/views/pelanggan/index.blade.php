@@ -54,7 +54,7 @@
                                 <a href="{{ asset('pelanggan/export') }}" class="btn btn-sm btn-outline-success">
                                     <i class="fas fa-download me-2"></i> Download Excel
                                 </a>
-                                <a href="{{ url('/') }}/wu/public/file_pelanggan/ContohPelanggan.xlsx"
+                                <a href="{{ url('/') }}/toko/public/file_pelanggan/ContohPelanggan.xlsx"
                                     class="btn btn-sm btn-outline-success">
                                     <i class="fas fa-download me-2"></i> Contoh Excel
                                 </a>

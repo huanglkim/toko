@@ -27,7 +27,7 @@ route::group(['middleware' => ['auth', 'role']], function () {
     //akuntansi laporan
     Route::get('/lapjurnalposting', 'LapAkuntansiController@lapjurnalposting');
     Route::POST('/lpcetakjurnal', 'LapAkuntansiController@lpcetakjurnal');
-
+    Route::get('/header-data', 'HeadingController@getHeaderData');
     //dashboard
     Route::get('/dashadmin', 'DashController@dashadmin');
     Route::POST('detailmenudashboard', 'DashController@detailmenudashboard');

@@ -1,106 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ $title }}</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap 4 -->
-    <!-- overlayScrollbars -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
-    <!-- Google Font: Source Sans Pro -->
     <style>
-        @page {
-            size: auto;
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            color: #000;
+            background-color: #fff;
+        }
 
+        h4.page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .invoice-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .invoice-info .col {
+            width: 32%;
+            font-size: 14px;
+        }
+
+        .invoice-info b {
+            font-size: 15px;
+        }
+
+        address {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
         }
 
         .double {
-            border-top: double;
+            border-top: 3px double #000;
         }
 
         @media print {
-            .bel {
-                position: fixed;
-                size: auto;
-                bottom: 0;
-            }
 
             html,
             body {
-                width: 215mm;
-                height: 190mm;
+                width: 210mm;
+                height: auto;
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
             }
 
             .pagebreak {
                 page-break-before: always;
             }
 
+            .invoice-info {
+                flex-direction: row;
+            }
 
-            /* page-break-after works, as well */
+            .col {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
 
+
 <body>
     <div class="wrapper">
-        <!-- Main content -->
         <section>
-            <div class="row">
-                <div class="col-12">
-                    <h4 class="page-header">
-                        {{ $title }}<br>
-                    </h4>
+            <h4 class="page-header">{{ $title }}</h4>
+
+            <div class="invoice-info">
+                <div class="col">
+                    @include('layout.heading')
                 </div>
             </div>
-            <!-- info row -->
-            <div class="row invoice-info">
-                <div class="col-sm-5 invoice-col">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="{{ url('/') }}/images/logo.jpg" alt="LOGO"
-                                class="brand-image elevation-3" style="opacity: .8" width="100" height="100">
-                        </div>
-                        <div class="col-9">
-                            <address>
-                                <b> {{ Toko(1)->nama_toko }} </b><br>
-                                {{ Toko(1)->alamat }} .
-                                +{{ Toko(1)->wa }}
-                            </address>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                    <b>
-                        Pelanggan :
-                    </b>
+                
+                <div class="col">
+                    <b>Pelanggan:</b>
                     <address>
                         {{ $pjhd->pelanggan->nama }}<br>
                         {{ $pjhd->pelanggan->alamat }}<br>
                         {{ $pjhd->pelanggan->kota }}<br>
                     </address>
                 </div>
-                <!-- /.col -->
-                <div class="col-sm-3 invoice-col text-right">
-                    <b>No. Nota : {{ $pjhd->invoice }}</b>
-                    <br>
+                
+                <div class="col text-right">
+                    <b>No. Nota :</b>{{ $pjhd->invoice }}<br>
                     <b>Tanggal :</b>{{ datetotanggal($pjhd->tanggal) }}
                 </div>
-                <!-- /.col -->
+               
             </div>
-            <!-- Table row -->
+            
             @include('penjualan.isinotapj')
             @include('penjualan.footernotapj')
         </section>
-        <!-- /.content -->
+       
     </div>
-    <!-- ./wrapper -->
-    <script type="text/javascript">
-        window.addEventListener("load", window.print());
-        //setTimeout(window.close, 16500);
+    <script>
+        window.print();
     </script>
 </body>
 

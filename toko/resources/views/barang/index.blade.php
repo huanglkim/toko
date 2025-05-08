@@ -54,7 +54,7 @@
                                     data-target="#importExcel">
                                     <i class="fas fa-file-import me-2"></i> Import Excel
                                 </button>
-                                <a href="{{ publicfolder() }}/file_barang/ContohBarang.xlsx"
+                                <a href="{{ url('/') }}/toko/public/file_barang/ContohBarang.xlsx"
                                     class="btn btn-sm btn-outline-success">
                                     <i class="fas fa-download me-2"></i> Contoh Excel
                                 </a>
